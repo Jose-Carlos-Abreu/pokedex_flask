@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Pokédex - Catálogo{% endblock title %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+    <div class="search-box">
+        <form method="POST" id="search-form" style="display: inline-block;">
+            
+            <input 
+                type="text" 
+                name="nome_pokemon" 
+                id="pokemon-input"              
+                placeholder="Nome (ex: gengar)" 
+                autocomplete="off"
+                required
+                oninput="showSuggestions(this.value)"
+                onkeydown="handleKeyDown(event)"
+            >
+            
+            <div id="suggestions-container"></div> 
+        </form>
+        
+        <a href="{{ url_for('home.home', page=1) }}" class="btn-home">Página inicial</a>
+    </div>
+
+    {% if erro %}
+        <div class="error-container">
+            <img class="error-img" src="{{ url_for('static', filename='pikachugif.gif') }}" alt="Pikachu triste">
+            <p class="error-text">{{ erro }}</p>
+        </div>
+    {% endif %}
+   
+    <div class="container">
+        {% for poke in pokemons %}
+            <div class="card {{ poke.tipo | lower }}">
+                <p style="font-size: 0.8rem; opacity: 0.8;">#{{ poke.id }}</p>
+                <img src="{{ poke.imagem }}" alt="{{ poke.nome }}">
+                <h2>{{ poke.nome }}</h2>
+                <small class="poke-type">{{ poke.tipo }}</small>
+                
+                {% if logado %}
+                    <button class="favorite-btn" style="margin-top: 5px;">⭐ Favoritar</button>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+
+    {% if total_paginas > 1 %}
+        <div class="pagination-controls">
+            {% if page > 1 %}
+                <a href="{{ url_for('home.home', page=page - 1) }}" class="page-link">← Anterior</a>
+            {% else %}
+                <span class="page-link disabled">← Anterior</span>
+            {% endif %}
+
+            <span>Página {{ page }} de {{ total_paginas }}</span>
+
+            {% if page < total_paginas %}
+                <a href="{{ url_for('home.home', page=page + 1) }}" class="page-link">Próximo →</a>
+            {% else %}
+                <span class="page-link disabled">Próximo →</span>
+            {% endif %}
+        </div>
+    {% endif %}
+    <script>
+        const POKEMON_SUGGESTIONS_DATA = {{ sugestoes_com_imagem | tojson | safe }};
+    </script>
+    
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+{% endblock content %}

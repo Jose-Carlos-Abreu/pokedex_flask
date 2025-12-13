@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Login de Usuário{% endblock title %}
+
+{% block content %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+    <div style="max-width: 400px; margin: 0 auto; text-align: center;">
+        <h1>Logar Usuário</h1>
+        
+        <form action="/pokedex/login" class="container" method="post">
+            <input type="text" name="nome" id="nome" placeholder="Nome" style="margin: 5px; padding: 8px;">
+            <input type="password" name="senha" id="senha" placeholder="Sua senha" maxlength="6" style="margin: 5px; padding: 8px;">
+            <br>
+            <button type="submit">Enviar</button>
+        </form>
+        <br>
+        <a href="{{ url_for('usuarios.cadastro') }}">Não tem uma conta?</a>
+    </div>
+{% endblock content %}

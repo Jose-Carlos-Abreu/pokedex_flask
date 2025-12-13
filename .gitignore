@@ -1,10 +1,11 @@
-venv/
-config.py
-
-#pre-processamento
-app/data/*.csv
-app/static/images/pokemons/
-
-# Bytecode Python
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+.Python
+.venv
+venv/
+*.sqlite3
+instance/
+.vscode/
+*.log
