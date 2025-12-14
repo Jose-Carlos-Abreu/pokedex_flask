@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}{{ pokemon.nome|capitalize }}{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pokemon_detail.css') }}">
+
+<a href="{{ url_for('home.home') }}" class="btn-home btn-voltar">
+    ← Voltar
+</a>
+
+<div class="pokemon-detail-card">
+    
+    <img 
+        src="{{ url_for('static', filename='images/pokemons/' ~ pokemon.id ~ '.png') }}" 
+        alt="{{ pokemon.nome }}"
+        class="pokemon-image"
+    >
+
+    <span class="pokemon-id">#{{ "%03d"|format(pokemon.id|int) }}</span>
+
+    <h2 class="pokemon-name">{{ pokemon.nome|capitalize }}</h2>
+
+    <div class="pokemon-types">
+        <span class="type-badge {{ pokemon.tipo1 }}">{{ pokemon.tipo1 }}</span>
+        {% if pokemon.tipo2 %}
+            <span class="type-badge {{ pokemon.tipo2 }}">{{ pokemon.tipo2 }}</span>
+        {% endif %}
+    </div>
+
+    <h3>Fraquezas</h3>
+    <div class="pokemon-types">
+        {% for fraq in pokemon.fraquezas.split(" | ") %}
+            <span class="type-badge {{ fraq }}">{{ fraq }}</span>
+        {% endfor %}
+    </div>
+
+    <div class="info-grid">
+        <div class="info-box">
+            <span class="info-title">Altura:</span>
+            <span class="info-value">{{ pokemon.altura }} m</span>
+        </div>
+
+        <div class="info-box">
+            <span class="info-title">Peso:</span>
+            <span class="info-value">{{ pokemon.peso }} kg</span>
+        </div>
+
+        <div class="info-box full">
+            <span class="info-title">Categoria:</span>
+            <span class="info-value">{{ pokemon.categoria }}</span>
+        </div>
+    </div>
+
+    <div class="abilities-box">
+        <span class="info-title">Habilidades</span>
+
+        <div class="abilities-list">
+            {% for habilidade in pokemon.habilidades.split('|') %}
+                <span class="ability-chip">
+                    {{ habilidade.replace('-', ' ')|capitalize }}
+                </span>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="info-block">
+        <h3>Evoluções</h3>
+
+        {% if evolutions %}
+            <div class="evolution-list">
+                {% for evo in evolutions %}
+                    <a href="{{ url_for('home.pokemon_detail', pokemon_id=evo.id) }}">
+                        <div class="evolution-item">
+                            <img src="{{ evo.imagem }}" alt="{{ evo.nome }}">
+                        </div>
+                    </a>
+
+                    {% if not loop.last %}
+                        <span class="evolution-arrow">→</span>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="empty-info">Este Pokémon não possui evoluções.</p>
+        {% endif %}
+    </div>
+    
+
+</div>
+{% endblock %}

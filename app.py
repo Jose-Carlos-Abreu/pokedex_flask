@@ -1,6 +1,6 @@
 from flask import Flask, redirect, url_for
-from app.controller.usuario import app as usercontroller
-from app.controller.home import app as homecontroller
+from app.controller.usuario import user_bp as usercontroller
+from app.controller.home import home_bp as homecontroller
 from flask_login import LoginManager 
 from app.models.usuario import db, Usuario
 import os, subprocess
