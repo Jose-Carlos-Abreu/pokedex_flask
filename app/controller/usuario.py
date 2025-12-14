@@ -2,9 +2,9 @@ from app.models.usuario import db, Usuario
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_user, logout_user, login_required, current_user
 
-app = Blueprint("usuarios", __name__)
+user_bp = Blueprint("usuarios", __name__)
 
-@app.route('/cadastro', methods=['GET', 'POST'])
+@user_bp.route('/cadastro', methods=['GET', 'POST'])
 def cadastro():
     if request.method == 'POST':
         if Usuario.query.filter_by(nome=request.form['nome']).first():
@@ -21,7 +21,7 @@ def cadastro():
         
     return render_template('cadastro.html')
 
-@app.route('/login', methods=['GET', 'POST'])
+@user_bp.route('/login', methods=['GET', 'POST'])
 def login():
 
     if current_user.is_authenticated:
@@ -42,7 +42,7 @@ def login():
 
     return render_template('login.html') 
 
-@app.route('/logout')
+@user_bp.route('/logout')
 @login_required 
 def logout():
     logout_user()
@@ -50,7 +50,7 @@ def logout():
     return redirect(url_for('home.home'))
 
 # 4. ROTA DE DELETE
-@app.route('/delete/<int:id>', methods=['GET'])
+@user_bp.route('/delete/<int:id>', methods=['GET'])
 @login_required
 def delete(id):
     usuario = Usuario.query.get(id)

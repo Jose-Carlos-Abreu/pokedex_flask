@@ -1,4 +1,3 @@
-
 {% extends "base.html" %}
 
 {% block title %}Pokédex{% endblock %}
@@ -40,28 +39,39 @@
 
 <div class="container">
     {% for poke in pokemons %}
-        <div class="card {{ poke.tipo1 | lower }}">
-            
-            <img
-                src="{{ url_for('static', filename='images/pokemons/' + poke.imagem) }}"
-                alt="{{ poke.nome }}"
-            >
-            
-            <p>#{{ poke.id }}</p>
+        <a href="{{ url_for('home.pokemon_detail', pokemon_id=poke.id) }}" class="card-link">
+            <div class="pokemon-card">
 
-            <h2>{{ poke.nome }}</h2>
+                <img
+                    src="{{ url_for('static', filename='images/pokemons/' ~ poke.id ~ '.png') }}"
+                    alt="{{ poke.nome }}"
+                    class="pokemon-image"
+                >
 
-            <small>
-                {{ poke.tipo1 }}
-                {% if poke.tipo2 %}/ {{ poke.tipo2 }}{% endif %}
-            </small>
+                <span class="pokemon-id">#{{ poke.id }}</span>
 
-            {% if logado %}
-                <button class="favorite-btn" disabled>
-                    ⭐ Favoritar
-                </button>
-            {% endif %}
-        </div>
+                <h2 class="pokemon-name">{{ poke.nome }}</h2>
+
+                <div class="pokemon-types">
+                    <span class="type-badge {{ poke.tipo1 | lower }}">
+                        {{ poke.tipo1 }}
+                    </span>
+
+                    {% if poke.tipo2 %}
+                        <span class="type-badge {{ poke.tipo2 | lower }}">
+                            {{ poke.tipo2 }}
+                        </span>
+                    {% endif %}
+                </div>
+
+            </div>
+        </a>
     {% endfor %}
 </div>
 {% endblock %}
+
+{% if logado %}
+    <button class="favorite-btn" disabled>
+        ⭐ Favoritar
+    </button>
+ {% endif %}

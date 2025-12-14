@@ -14,8 +14,8 @@ def extrair_campos(pokemon_json, species_json):
     # Pega a url da imagem oficial
     imagem = f"{id}.png"
 
-    altura = pokemon_json["height"]
-    peso = pokemon_json["weight"]
+    altura = pokemon_json["height"] / 10      # dm -> metros
+    peso = pokemon_json["weight"] / 10        # hg -> kg
 
     # Categoria "genus" dentro do species_json
     categoria = ""
@@ -28,7 +28,7 @@ def extrair_campos(pokemon_json, species_json):
     evolucoes = " | ".join(lista_evolucoes)
 
     lista_habilidades = [habilidade["ability"]["name"] for habilidade in pokemon_json["abilities"]]
-    habilidades = "|".join(sorted(lista_habilidades))
+    habilidades = " | ".join(sorted(lista_habilidades))
 
     lista_fraquezas = pegar_fraquezas(tipo1, tipo2)
     fraquezas = " | ".join(sorted(lista_fraquezas))
@@ -50,7 +50,7 @@ def extrair_campos(pokemon_json, species_json):
 def main():
     linha = []
 
-    for pokemon_id in range(1, 100): # Teste inicial apenas com pokemons de Kanto
+    for pokemon_id in range(1, 201): # Teste inicial apenas com pokemons de Kanto
         print(f"Processando Pokémon {pokemon_id}...")
 
         pokemon_json = pegar_dados_pokemon(pokemon_id)
