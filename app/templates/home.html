@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Pokédex{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+
+<header class="header">
+    <h1>Pokédex</h1>
+
+    {% if not logado %}
+        <a href="{{ url_for('usuarios.login') }}" class="btn-login">Entrar</a>
+    {% endif %}
+</header>
+
+<form method="GET" class="search-box">
+    <input
+        type="text"
+        name="search"
+        placeholder="Buscar por nome ou número"
+        value="{{ request.args.get('search', '') }}"
+    >
+
+    <select name="tipo">
+        <option value="">Todos os tipos</option>
+        {% for tipo in tipos %}
+            <option value="{{ tipo }}" {% if tipo == tipo_selecionado %}selected{% endif %}>
+                {{ tipo|capitalize }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <button type="submit">Buscar</button>
+</form>
+
+{% if erro %}
+    <p class="error-text">{{ erro }}</p>
+{% endif %}
+
+<div class="container">
+    {% for poke in pokemons %}
+        <a href="{{ url_for('home.pokemon_detail', pokemon_id=poke.id) }}" class="card-link">
+            <div class="pokemon-card">
+
+                <img
+                    src="{{ url_for('static', filename='images/pokemons/' ~ poke.id ~ '.png') }}"
+                    alt="{{ poke.nome }}"
+                    class="pokemon-image"
+                >
+
+                <span class="pokemon-id">#{{ poke.id }}</span>
+
+                <h2 class="pokemon-name">{{ poke.nome }}</h2>
+
+                <div class="pokemon-types">
+                    <span class="type-badge {{ poke.tipo1 | lower }}">
+                        {{ poke.tipo1 }}
+                    </span>
+
+                    {% if poke.tipo2 %}
+                        <span class="type-badge {{ poke.tipo2 | lower }}">
+                            {{ poke.tipo2 }}
+                        </span>
+                    {% endif %}
+                </div>
+
+            </div>
+        </a>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% if logado %}
+    <button class="favorite-btn" disabled>
+        ⭐ Favoritar
+    </button>
+ {% endif %}
