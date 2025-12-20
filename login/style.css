@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #ececec;
+}
+
+.box-area {
+    max-width: 930px;
+    width: 100%;
+}
+
+.left-box {
+    background: linear-gradient(-45deg, #DC0A2D, #FF4500, #FBB03B, #DC0A2D);
+    background-size: 400% 400%;
+    animation: animacao-fogo 10s ease infinite;
+    padding: 20px 0;
+}
+
+.featured-img img {
+    transition: transform 0.3s ease;
+}
+
+.featured-img img:hover {
+    transform: scale(1.05) rotate(-2deg);
+}
+
+.left-box h2 {
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.left-box small {
+    font-weight: 300;
+    opacity: 0.9;
+}
+
+.right-box {
+    padding: 40px 30px;
+}
+
+.input-group-custom {
+    background-color: #f8f9fa;
+    border: 2px solid #f0f0f0;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+.input-group-custom .input-group-text {
+    background-color: transparent;
+    border: none;
+    padding-right: 15px;
+    padding-left: 15px;
+    border-right: 2px solid #f0f0f0;
+    border-radius: 0;
+    height: 100%;
+    transition: border-color 0.3s ease;
+}
+
+.input-group-custom .form-control {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    padding-left: 15px;
+    color: #333;
+}
+
+.input-group-custom:focus-within {
+    border-color: #DC0A2D;
+    background-color: #fff;
+}
+
+.input-group-custom:focus-within .input-group-text {
+    border-right-color: #DC0A2D;
+}
+
+.btn-pokedex {
+    background-color: #DC0A2D;
+    color: white;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.3s;
+    border: none;
+}
+
+.btn-pokedex:hover {
+    background-color: #B90824;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.link-hover-vermelho {
+    text-decoration: none !important;
+    color: #DC0A2D;
+    font-weight: 600;
+    position: relative;
+    transition: color 0.3s;
+}
+
+.link-hover-vermelho::after {
+    content: '';
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: #DC0A2D;
+    transition: width 0.3s ease-in-out;
+}
+
+.link-hover-vermelho:hover {
+    color: #B90824;
+}
+
+.link-hover-vermelho:hover::after {
+    width: 100%;
+}
+
+#video-background {
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    z-index: -1; 
+}
+
+@media only screen and (max-width: 768px) {
+    .box-area {
+        margin: 10px;
+        padding: 20px;
+    }
+    .left-box {
+        height: auto;
+        padding: 30px;
+    }
+    .right-box {
+        padding: 20px;
+    }
+}
+
+@keyframes animacao-fogo {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
