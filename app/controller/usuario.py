@@ -10,14 +10,14 @@ def cadastro():
         if Usuario.query.filter_by(nome=request.form['nome']).first():
             flash('Nome de usuário já existe. Escolha outro.', 'error')
             return redirect(url_for('usuarios.cadastro'))
-            
-        usuario = Usuario(request.form['nome'], request.form['senha'])
-        db.session.add(usuario)
-        db.session.commit()
-        
-        flash('Cadastro realizado com sucesso! Faça login.', 'success')
-        
-        return redirect(url_for('usuarios.login')) 
+        if request.form['senha'] == request.form['confirmar-senha']:
+            usuario = Usuario(request.form['nome'], request.form['senha'])
+            db.session.add(usuario)
+            db.session.commit()
+            flash('Cadastro realizado com sucesso! Faça login.', 'success')
+            return redirect(url_for('usuarios.login')) 
+        else:
+            flash('Senhas divergentes.', 'error')
         
     return render_template('cadastro.html')
 
@@ -34,7 +34,7 @@ def login():
         if usuario and usuario.check_password(senha):
             login_user(usuario) 
             next_page = request.args.get('next')
-            flash(f'Bem vindo, {nome}!')
+            flash(f'Bem vindo, {nome}!', 'success')
             return redirect(next_page or url_for('home.home'))
         else:
             flash('Nome de usuário ou senha inválidos.', 'error')
@@ -46,7 +46,7 @@ def login():
 @login_required 
 def logout():
     logout_user()
-    flash('Você saiu da sua conta.')
+    flash('Você saiu da sua conta.', 'error')
     return redirect(url_for('home.home'))
 
 # 4. ROTA DE DELETE
@@ -57,5 +57,5 @@ def delete(id):
     logout_user()
     db.session.delete(usuario)
     db.session.commit()
-    flash('Sua conta foi deletada com sucesso.')
+    flash('Sua conta foi deletada com sucesso.', 'error')
     return redirect(url_for('home.home'))

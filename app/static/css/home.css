@@ -39,7 +39,7 @@ body {
     padding: 10px 5%;
 }
 
-.flash-message {
+.flash-message-success {
     padding: 10px;
     border-radius: 5px;
     text-align: center;
@@ -47,6 +47,16 @@ body {
     background: #d4edda;
     color: #155724;
     border: 1px solid #c3e6cb;
+}
+
+.flash-message-error {
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    margin-bottom: 5px;
+    background: #ff5c5c;
+    color: #ffffff;
+    border: 1px solid #000000;
 }
 
 .search-section {
