@@ -38,18 +38,29 @@
 <main class="content">
     <section class="search-section">
         <form method="GET" class="search-form">
-            <input type="text" name="search" placeholder="Buscar por nome ou número..." value="{{ request.args.get('search', '') }}">
-            
+
+            <input
+                type="text"
+                name="search"
+                placeholder="Buscar por nome ou número..."
+                value="{{ request.args.get('search', '') }}"
+            >
+
             <select name="tipo">
                 <option value="">Todos os tipos</option>
                 {% for tipo in tipos %}
-                    <option value="{{ tipo }}" {% if tipo == tipo_selecionado %}selected{% endif %}>
+                    <option value="{{ tipo }}"
+                        {% if tipo == tipo_selecionado %}selected{% endif %}
+                    >
                         {{ tipo|capitalize }}
                     </option>
                 {% endfor %}
             </select>
 
-            <button type="submit" class="btn-search">Buscar</button>
+            <button type="submit" class="btn-search">
+                🔍 Buscar
+            </button>
+
         </form>
     </section>
 

@@ -21,6 +21,20 @@ def carregar_pokemons():
 
     return pokemons
 
+def listar_tipos():
+    """Retorna lista única de tipos existentes no CSV"""
+    tipos = set()
+
+    with open(CSV_PATH, newline='', encoding='utf-8') as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            if row["tipo1"]:
+                tipos.add(row["tipo1"].lower())
+            if row["tipo2"]:
+                tipos.add(row["tipo2"].lower())
+
+    return sorted(tipos)
+
 def buscar_pokemon_por_nome(nome):
     nome = nome.strip().lower()
 

@@ -99,7 +99,13 @@ body {
     padding: 0 5% 50px;
 }
 
+.pokemon-card-container {
+    display: flex;
+    flex-direction: column;
+}
+
 .pokemon-card {
+    flex: 1;
     background: white;
     border-radius: 15px;
     padding: 20px;
@@ -196,4 +202,20 @@ body {
 
 .btn-favorite:hover {
     background: #f0f0f0;
+}
+
+.search-form select {
+    background-color: #ffffff;
+    cursor: pointer;
+}
+
+.search-form select:focus,
+.search-form input:focus {
+    outline: none;
+    border-color: #ee1515;
+    box-shadow: 0 0 0 2px rgba(238, 21, 21, 0.2);
+}
+
+.btn-search:hover {
+    background-color: #cc1212;
 }
