@@ -49,3 +49,25 @@ def buscar_pokemon_por_nome(nome):
                 }
 
     return None
+
+def buscar_pokemons_por_prefixo(texto, limite=5):
+    texto = texto.strip().lower()
+    resultados = []
+
+    if not texto:
+        return resultados
+
+    with open(CSV_PATH, newline="", encoding="utf-8") as csvfile:
+        reader = csv.DictReader(csvfile)
+
+        for row in reader:
+            if row["nome"].lower().startswith(texto):
+                resultados.append({
+                    "id": int(row["id"]),
+                    "nome": row["nome"]
+                })
+
+            if len(resultados) >= limite:
+                break
+
+    return resultados
