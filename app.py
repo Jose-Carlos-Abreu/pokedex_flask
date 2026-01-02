@@ -1,6 +1,7 @@
 from flask import Flask, redirect, url_for
 from app.controller.usuario import user_bp as usercontroller
 from app.controller.home import home_bp as homecontroller
+from app.controller.favorite import favorite_bp
 from flask_login import LoginManager 
 from app.models.usuario import db, Usuario
 import os, subprocess
@@ -17,6 +18,7 @@ app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET_KEY', 'chave_generica_pa
 
 app.register_blueprint(usercontroller, url_prefix="/pokedex/")
 app.register_blueprint(homecontroller, url_prefix="/pokedex/")
+app.register_blueprint(favorite_bp, url_prefix="/favorite")
 
 @app.route('/')
 def index():

@@ -302,13 +302,15 @@ body {
     width: 100%;
     margin-top: 10px;
     padding: 8px;
-    border: 1px solid #ddd;
-    background: white;
     border-radius: 8px;
+    border: 1px solid #ddd;
+    background: #fff;
     cursor: pointer;
-    transition: 0.2s;
+    font-weight: bold;
 }
 
-.btn-favorite:hover {
-    background: #f0f0f0;
+.btn-favorite.favoritado {
+    background-color: #ffd700;
+    border-color: #e6c200;
+    color: #000;
 }
