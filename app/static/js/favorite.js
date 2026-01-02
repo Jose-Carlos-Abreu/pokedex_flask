@@ -23,8 +23,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
 
                 if (data.status === "removed") {
-                    button.classList.remove("active");
-                    button.textContent = "☆ Favoritar";
+                    const card = document.getElementById(`card-${pokemonId}`);
+                    if (card) {
+                        card.remove();
+                    } else {
+                        button.classList.remove("active");
+                        button.textContent = "☆ Favoritar";
+                    }
                 }
 
             } catch (error) {

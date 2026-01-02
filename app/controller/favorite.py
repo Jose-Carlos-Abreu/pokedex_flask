@@ -1,6 +1,7 @@
-from flask import Blueprint, redirect, url_for, flash, request, jsonify
+from flask import Blueprint, redirect, url_for, flash, request, jsonify, render_template
 from flask_login import current_user, login_required
 from app.models.favorite import salvar_favorito, remover_favorito, listar_favoritos
+from app.models.home import carregar_pokemons
 
 favorite_bp = Blueprint("favorite", __name__)
 
@@ -21,3 +22,20 @@ def toggle(pokemon_id):
             "status": "added",
             "pokemon_id": pokemon_id
         })
+
+@favorite_bp.route("/favorites")
+@login_required
+def favorites():
+    favoritos_ids = listar_favoritos(current_user.id)
+
+    pokemons = carregar_pokemons()
+
+    favoritos = [
+        p for p in pokemons
+        if p["id"] in favoritos_ids
+    ]
+
+    return render_template(
+        "favorites.html",
+        pokemons=favoritos
+    )

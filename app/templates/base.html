@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Pokédex{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+</head>
+<body>
+
+<header class="main-header">
+    <nav class="navbar">
+        <div class="logo">
+            <h1>🔴 Pokédex ⚪</h1>
+        </div>
+        <div class="user-auth">
+            {% if current_user.is_authenticated %}
+                <span>Olá, <strong>{{ current_user.nome }}</strong></span>
+                <a href="{{ url_for('favorite.favorites') }}">⭐ Favoritos</a>
+                <a href="{{ url_for('usuarios.logout') }}" class="btn-logout">Sair</a>
+            {% else %}
+                <a href="{{ url_for('usuarios.login') }}">Login</a>
+                <a href="{{ url_for('usuarios.cadastro') }}">Cadastre-se</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-container">
+                {% for category, message in messages %}
+                    <div class="flash-message-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+</header>
+
+<main class="content">
+    {% block content %}{% endblock %}
+</main>
+
+{% block scripts %}{% endblock %}
+</body>
+</html>

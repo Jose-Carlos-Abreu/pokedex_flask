@@ -1,112 +1,82 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pokédex - Home</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
-</head>
-<body>
+{% extends "base.html" %}
 
-<header class="main-header">
-    <nav class="navbar">
-        <div class="logo">
-            <h1>🔴 Pokédex ⚪</h1>
+{% block title %}Pokédex - Home{% endblock %}
+
+{% block content %}
+
+<section class="search-section">
+    <form method="GET" class="search-form">
+
+        <div class="search-wrapper">
+            <input
+                type="text"
+                id="search"
+                name="search"
+                placeholder="Buscar por nome ou número..."
+                value="{{ request.args.get('search', '') }}"
+                autocomplete="off"
+            >
+
+            <div id="suggestions-container"></div>
         </div>
-        <div class="user-auth">
+
+        <select name="tipo">
+            <option value="">Todos os tipos</option>
+            {% for tipo in tipos %}
+                <option value="{{ tipo }}"
+                    {% if tipo == tipo_selecionado %}selected{% endif %}
+                >
+                    {{ tipo|capitalize }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <button type="submit" class="btn-search">
+            🔍 Buscar
+        </button>
+
+    </form>
+</section>
+
+<div class="pokemon-grid">
+    {% for poke in pokemons %}
+        <div class="pokemon-card-container">
+            <a href="{{ url_for('home.pokemon_detail', pokemon_id=poke.id) }}" class="pokemon-card">
+                <div class="image-wrapper">
+                    <img src="{{ url_for('static', filename='images/pokemons/' ~ poke.id ~ '.png') }}" alt="{{ poke.nome }}" class="pokemon-img">
+                </div>
+                <span class="pokemon-number">#{{ "%03d" | format(poke.id) }}</span>
+                <h2 class="pokemon-name">{{ poke.nome | capitalize }}</h2>
+
+                <div class="types-row">
+                    <span class="type-badge {{ poke.tipo1 | lower }}">{{ poke.tipo1 }}</span>
+                    {% if poke.tipo2 %}
+                        <span class="type-badge {{ poke.tipo2 | lower }}">{{ poke.tipo2 }}</span>
+                    {% endif %}
+                </div>
+            </a>
+            
             {% if current_user.is_authenticated %}
-                <span>Olá, <strong>{{ current_user.nome }}</strong></span>
-                <a href="{{ url_for('usuarios.logout') }}" class="btn-logout">Sair</a>
-            {% else %}
-                <a href="{{ url_for('usuarios.login') }}">Login</a>
-                <a href="{{ url_for('usuarios.cadastro') }}">Cadastre-se</a>
+            <form action="{{ url_for('favorite.toggle', pokemon_id=poke.id) }}" method="post">
+                <button
+                    class="btn-favorite {% if poke.id in favoritos %}active{% endif %}"
+                    data-pokemon-id="{{ poke.id }}"
+                >
+                    {% if poke.id in favoritos %}
+                        ⭐ Favoritado
+                    {% else %}
+                        ☆ Favoritar
+                    {% endif %}
+                </button>
+            </form>
             {% endif %}
         </div>
-    </nav>
+    {% endfor %}
+</div>
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            <div class="flash-container">
-                {% for category, message in messages %}
-                    <div class="flash-message-{{ category }}">{{ message }}</div>
-                {% endfor %}
-            </div>
-        {% endif %}
-    {% endwith %}
-</header>
+{% endblock %}
 
-<main class="content">
-    <section class="search-section">
-        <form method="GET" class="search-form">
-
-            <div class="search-wrapper">
-                <input
-                    type="text"
-                    id="search"
-                    name="search"
-                    placeholder="Buscar por nome ou número..."
-                    value="{{ request.args.get('search', '') }}"
-                    autocomplete="off"
-                >
-
-                <div id="suggestions-container"></div>
-            </div>
-
-            <select name="tipo">
-                <option value="">Todos os tipos</option>
-                {% for tipo in tipos %}
-                    <option value="{{ tipo }}"
-                        {% if tipo == tipo_selecionado %}selected{% endif %}
-                    >
-                        {{ tipo|capitalize }}
-                    </option>
-                {% endfor %}
-            </select>
-
-            <button type="submit" class="btn-search">
-                🔍 Buscar
-            </button>
-
-        </form>
-    </section>
-
-    <div class="pokemon-grid">
-        {% for poke in pokemons %}
-            <div class="pokemon-card-container">
-                <a href="{{ url_for('home.pokemon_detail', pokemon_id=poke.id) }}" class="pokemon-card">
-                    <div class="image-wrapper">
-                        <img src="{{ url_for('static', filename='images/pokemons/' ~ poke.id ~ '.png') }}" alt="{{ poke.nome }}" class="pokemon-img">
-                    </div>
-                    <span class="pokemon-number">#{{ "%03d" | format(poke.id) }}</span>
-                    <h2 class="pokemon-name">{{ poke.nome | capitalize }}</h2>
-
-                    <div class="types-row">
-                        <span class="type-badge {{ poke.tipo1 | lower }}">{{ poke.tipo1 }}</span>
-                        {% if poke.tipo2 %}
-                            <span class="type-badge {{ poke.tipo2 | lower }}">{{ poke.tipo2 }}</span>
-                        {% endif %}
-                    </div>
-                </a>
-                
-                {% if current_user.is_authenticated %}
-                <form action="{{ url_for('favorite.toggle', pokemon_id=poke.id) }}" method="post">
-                   <button
-                        class="btn-favorite {% if poke.id in favoritos %}active{% endif %}"
-                        data-pokemon-id="{{ poke.id }}"
-                    >
-                        {% if poke.id in favoritos %}
-                            ⭐ Favoritado
-                        {% else %}
-                            ☆ Favoritar
-                        {% endif %}
-                    </button>
-                </form>
-                {% endif %}
-            </div>
-        {% endfor %}
-    </div>
-</main>
-<script src="{{ url_for('static', filename='js/search.js') }}"></script>
-<script src="{{ url_for('static', filename='js/favorite.js') }}"></script>
-</body>
-</html>
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/search.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/favorite.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Meus Favoritos{% endblock %}
+
+{% block content %}
+
+<h1 class="page-title">⭐ Meus Favoritos</h1>
+
+{% if pokemons %}
+<div class="pokemon-grid">
+    {% for poke in pokemons %}
+        <div class="pokemon-card-container" id="card-{{ poke.id }}">
+            <a href="{{ url_for('home.pokemon_detail', pokemon_id=poke.id) }}" class="pokemon-card">
+                <div class="image-wrapper">
+                    <img src="{{ url_for('static', filename='images/pokemons/' ~ poke.id ~ '.png') }}" alt="{{ poke.nome }}" class="pokemon-img">
+                </div>
+                <span class="pokemon-number">#{{ "%03d"|format(poke.id) }}</span>
+                <h2 class="pokemon-name">{{ poke.nome|capitalize }}</h2>
+            </a>
+
+            <button
+                class="btn-remove-favorite btn-favorite active"
+                data-pokemon-id="{{ poke.id }}"
+            >
+                ❌ Remover dos Favoritos
+            </button>
+        </div>
+    {% endfor %}
+</div>
+{% else %}
+<p class="empty-state">Você ainda não favoritou nenhum Pokémon.</p>
+{% endif %}
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/favorite.js') }}"></script>
+{% endblock %}
