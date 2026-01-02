@@ -89,7 +89,15 @@
                 </a>
                 
                 {% if current_user.is_authenticated %}
-                    <button class="btn-favorite">⭐ Favoritar</button>
+                <form action="{{ url_for('favorite.toggle', pokemon_id=poke.id) }}" method="post">
+                   <button class="btn-favorite {% if poke.id in favoritos %}favoritado{% endif %}">
+                        {% if poke.id in favoritos %}
+                            ⭐ Favoritado
+                        {% else %}
+                            ☆ Favoritar
+                        {% endif %}
+                    </button>
+                </form>
                 {% endif %}
             </div>
         {% endfor %}

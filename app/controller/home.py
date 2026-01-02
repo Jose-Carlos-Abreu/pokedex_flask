@@ -1,6 +1,7 @@
 from flask import Blueprint, request, render_template, abort, jsonify
 from flask_login import current_user
 from app.models.home import carregar_pokemons, buscar_pokemon_por_nome, listar_tipos, buscar_pokemons_por_prefixo
+from app.models.favorite import listar_favoritos
 import csv
 
 home_bp = Blueprint("home", __name__)
@@ -11,6 +12,10 @@ POKEMONS_POR_PAGINA = 200
 def home():
     pokemons = carregar_pokemons()
     tipos = listar_tipos()
+
+    favoritos = set()
+    if current_user.is_authenticated:
+        favoritos = listar_favoritos(current_user.id)
 
     search = request.args.get('search', '').lower()
     tipo_selecionado = request.args.get('tipo', '').lower()
@@ -37,6 +42,7 @@ def home():
         'home.html',
         pokemons=pokemons[inicio:fim],
         tipos=tipos,
+        favoritos=favoritos,
         page=page,
         total_paginas=total_paginas,
         logado=current_user.is_authenticated
@@ -82,3 +88,4 @@ def api_search_pokemons():
 
     resultados = buscar_pokemons_por_prefixo(query)
     return jsonify(resultados)
+
