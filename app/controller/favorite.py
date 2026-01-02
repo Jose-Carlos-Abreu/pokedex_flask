@@ -1,15 +1,23 @@
-from flask import Blueprint, redirect, url_for, flash
+from flask import Blueprint, redirect, url_for, flash, request, jsonify
 from flask_login import current_user, login_required
-from app.models.favorite import salvar_favorito
+from app.models.favorite import salvar_favorito, remover_favorito, listar_favoritos
 
 favorite_bp = Blueprint("favorite", __name__)
 
-@favorite_bp.route("/<int:pokemon_id>", methods=["POST"])
+@favorite_bp.route("/toggle/<int:pokemon_id>", methods=["POST"])
+@login_required
 def toggle(pokemon_id):
-    if not current_user.is_authenticated:
-        flash("Faça login para favoritar um Pokémon.", "error")
-        return redirect(url_for("usuarios.login"))
+    favoritos = listar_favoritos(current_user.id)
 
-    salvar_favorito(current_user.id, pokemon_id)
-    flash("Pokémon favoritado!", "success")
-    return redirect(url_for("home.home"))
+    if pokemon_id in favoritos:
+        remover_favorito(current_user.id, pokemon_id)
+        return jsonify({
+            "status": "removed",
+            "pokemon_id": pokemon_id
+        })
+    else:
+        salvar_favorito(current_user.id, pokemon_id)
+        return jsonify({
+            "status": "added",
+            "pokemon_id": pokemon_id
+        })

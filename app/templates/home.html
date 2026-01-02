@@ -90,7 +90,10 @@
                 
                 {% if current_user.is_authenticated %}
                 <form action="{{ url_for('favorite.toggle', pokemon_id=poke.id) }}" method="post">
-                   <button class="btn-favorite {% if poke.id in favoritos %}favoritado{% endif %}">
+                   <button
+                        class="btn-favorite {% if poke.id in favoritos %}active{% endif %}"
+                        data-pokemon-id="{{ poke.id }}"
+                    >
                         {% if poke.id in favoritos %}
                             ⭐ Favoritado
                         {% else %}
@@ -104,5 +107,6 @@
     </div>
 </main>
 <script src="{{ url_for('static', filename='js/search.js') }}"></script>
+<script src="{{ url_for('static', filename='js/favorite.js') }}"></script>
 </body>
 </html>
