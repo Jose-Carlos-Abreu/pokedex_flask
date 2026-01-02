@@ -45,6 +45,13 @@
                 <div class="image-wrapper">
                     <img src="{{ url_for('static', filename='images/pokemons/' ~ poke.id ~ '.png') }}" alt="{{ poke.nome }}" class="pokemon-img">
                 </div>
+                {% if current_user.is_authenticated %}
+                <button
+                    class="favorite-star {% if poke.id in favoritos %}active{% endif %}"
+                    data-pokemon-id="{{ poke.id }}"
+                    aria-label="Favoritar Pokémon"
+                >★</button>
+                {% endif %}
                 <span class="pokemon-number">#{{ "%03d" | format(poke.id) }}</span>
                 <h2 class="pokemon-name">{{ poke.nome | capitalize }}</h2>
 
@@ -55,21 +62,6 @@
                     {% endif %}
                 </div>
             </a>
-            
-            {% if current_user.is_authenticated %}
-            <form action="{{ url_for('favorite.toggle', pokemon_id=poke.id) }}" method="post">
-                <button
-                    class="btn-favorite {% if poke.id in favoritos %}active{% endif %}"
-                    data-pokemon-id="{{ poke.id }}"
-                >
-                    {% if poke.id in favoritos %}
-                        ⭐ Favoritado
-                    {% else %}
-                        ☆ Favoritar
-                    {% endif %}
-                </button>
-            </form>
-            {% endif %}
         </div>
     {% endfor %}
 </div>
