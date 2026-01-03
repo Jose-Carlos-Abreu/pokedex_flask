@@ -129,6 +129,27 @@ body {
     z-index: -1; 
 }
 
+.flash-container {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.alert {
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
 @media only screen and (max-width: 768px) {
     .box-area {
         margin: 10px;

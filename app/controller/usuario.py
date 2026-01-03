@@ -59,3 +59,4 @@ def delete(id):
     db.session.commit()
     flash('Sua conta foi deletada com sucesso.', 'error')
     return redirect(url_for('home.home'))
+

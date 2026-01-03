@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for
+from flask import Flask, redirect, url_for, flash
 from app.controller.usuario import user_bp as usercontroller
 from app.controller.home import home_bp as homecontroller
 from app.controller.favorite import favorite_bp
@@ -31,6 +31,11 @@ login_manager.login_view = 'usuarios.login'
 @login_manager.user_loader
 def load_user(user_id):
     return Usuario.query.get(int(user_id))
+
+@login_manager.unauthorized_handler
+def unauthorized():
+    flash("Faça login para acessar seus favoritos.", "error")
+    return redirect(url_for("usuarios.login"))
 
 def executar_preprocessamento():
     csv_ok = os.path.exists("app/data/pokemons.csv")
