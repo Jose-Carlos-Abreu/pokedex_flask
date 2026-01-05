@@ -46,6 +46,21 @@
                     <img src="{{ url_for('static', filename='images/pokemons/' ~ poke.id ~ '.png') }}" alt="{{ poke.nome }}" class="pokemon-img">
                 </div>
                 {% if current_user.is_authenticated %}
+                <div class="card-left-controls">
+                    {% if poke.id in team_ids %}
+                    <form method="post" action="{{ url_for('usuarios.remove_from_team') }}">
+                        <input type="hidden" name="pokemon_id" value="{{ poke.id }}">
+                        <button type="submit" class="btn-remove" title="Remover do time">−</button>
+                    </form>
+                    {% else %}
+                    <form method="post" action="{{ url_for('usuarios.add_to_team') }}">
+                        <input type="hidden" name="pokemon_id" value="{{ poke.id }}">
+                        <button type="submit" class="btn-add-team" title="Adicionar ao time">
+                            <img src="{{ url_for('static', filename='images/ui/pokeball.svg') }}" alt="pokeball" />
+                        </button>
+                    </form>
+                    {% endif %}
+                </div>
                 <button
                     class="favorite-star {% if poke.id in favoritos %}active{% endif %}"
                     data-pokemon-id="{{ poke.id }}"
@@ -62,6 +77,7 @@
                     {% endif %}
                 </div>
             </a>
+            
         </div>
     {% endfor %}
 </div>
