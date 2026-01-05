@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>{% block title %}Pokédex{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/team.css') }}">
 </head>
 <body>
 
@@ -16,6 +17,7 @@
             {% if current_user.is_authenticated %}
                 <span>Olá, <strong>{{ current_user.nome }}</strong></span>
                 <a href="{{ url_for('favorite.favorites') }}">⭐ Favoritos</a>
+                    <a href="{{ url_for('usuarios.time') }}">⚔️ Time</a>
                 <a href="{{ url_for('usuarios.logout') }}" class="btn-logout">Sair</a>
             {% else %}
                 <a href="{{ url_for('usuarios.login') }}">Login</a>

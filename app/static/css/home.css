@@ -29,11 +29,6 @@ body {
     border-radius: 5px;
     transition: 0.3s;
 }
-
-.btn-logout {
-    background: #ff4444;
-}
-
 .btn-logout:hover {
     background: #cc0000;
 }
@@ -213,6 +208,7 @@ body {
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 25px;
     padding: 0 5% 50px;
+    /* Ensure base grid settings preserved; prepare for responsive tweaks */
 }
 
 .pokemon-card-container {
@@ -242,6 +238,7 @@ body {
 .pokemon-img {
     width: 120px;
     height: 120px;
+    /* Ensure base grid settings preserved; prepare for responsive tweaks */
     object-fit: contain;
     margin-bottom: 10px;
 }
@@ -300,16 +297,12 @@ body {
 /* FAVORITE */
 
 .favorite-star, .remove-favorite-x {
-    position: absolute;
-    top: 12px;
-    right: 12px;
     background: transparent;
     border: none;
     font-size: 1.6rem;
     cursor: pointer;
     color: #ccc;
     transition: transform 0.2s ease, color 0.2s ease;
-    z-index: 5;
 }
 
 .favorite-star:hover {
@@ -320,6 +313,33 @@ body {
     color: #ffcb05;
 }
 
+/* When inside a pokemon card, make favorite and control buttons inline and non-overlapping */
+.pokemon-card .card-left-controls {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    z-index: 6;
+}
+.pokemon-card .btn-add-team, .pokemon-card .btn-remove {
+    background: rgba(255,255,255,0.95);
+    border: 1px solid #eee;
+    padding: 6px 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+.pokemon-card .favorite-star {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    margin: 0;
+    font-size: 1.6rem;
+    z-index: 7;
+}
+
 .favorite-star:active, .remove-favorite-x:active {
     transform: scale(0.95);
 }
@@ -327,4 +347,28 @@ body {
 .remove-favorite-x:hover {
     color: #e74c3c;
     transform: scale(1.2);
+}
+
+/* small buttons next to favorite star */
+.pokemon-card .btn-remove { color: #e74c3c; border-color: rgba(231,76,60,0.15); }
+.pokemon-card .btn-add-team { background: linear-gradient(135deg,#34c759,#28a745); color: white; border: none; }
+.pokemon-card .btn-add-team:hover { opacity: 0.95; }
+.pokemon-card .btn-add-team img { width: 20px; height: 20px; display: block; }
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+    .pokemon-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 18px;
+        padding: 0 4% 40px;
+    }
+    .pokemon-img { width: 96px; height: 96px; }
+    .pokemon-name { font-size: 1.1rem; }
+}
+
+@media (max-width: 480px) {
+    .pokemon-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap:12px; }
+    .pokemon-card { padding: 12px; }
+    .pokemon-img { width: 72px; height: 72px; }
+    .pokemon-name { font-size: 1rem; }
 }

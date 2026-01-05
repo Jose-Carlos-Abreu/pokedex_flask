@@ -1,0 +1,121 @@
+.team-container {
+    max-width: 900px;
+    margin: 20px auto 60px;
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+.team-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+.team-header h3 { margin: 0; }
+.team-list { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.team-pokemon {
+    display: inline-block;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: #f1f1f1;
+    font-weight: 600;
+}
+.remove-form { display: inline-block; margin-left:6px; }
+.team-container .btn-remove {
+    background: transparent;
+    border: 1px solid #e74c3c;
+    color: #e74c3c;
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+.team-container .btn-remove:hover { background: #e74c3c; color: white; }
+.team-container .btn-add-team {
+    margin-top: 6px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: none;
+    background: linear-gradient(135deg,#34c759,#28a745);
+    color: white;
+    cursor: pointer;
+}
+
+/* Team grid: show all cards (no horizontal scroll). Responsive grid. */
+.team-container .pokemon-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 16px;
+    padding: 12px 20px 20px;
+}
+.team-container .pokemon-card-container {
+    display: flex;
+    justify-content: center;
+}
+.team-container .pokemon-card {
+    padding: 12px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 200px;
+    box-sizing: border-box;
+}
+.team-container .pokemon-img {
+    width: 80px;
+    height: 80px;
+}
+.team-container .pokemon-name {
+    font-size: 1rem;
+    margin: 8px 0;
+}
+.team-container .pokemon-number {
+    font-size: 0.85rem;
+}
+.team-container .remove-form {
+    text-align: center;
+    margin-top: 8px;
+}
+
+/* Header tweaks */
+.team-title { margin: 0; font-size: 1.5rem; }
+.team-sub { margin: 4px 0 0; color: #666; font-size: 0.95rem; }
+.team-actions .btn-link { text-decoration: none; color: #313131; border: 1px solid #e6e6e6; padding: 8px 12px; border-radius: 8px; background: #fff; }
+.team-actions .btn-link:hover { background: #f5f5f5; }
+
+/* Remove button as overlay on card */
+.team-remove-btn {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    z-index: 6;
+}
+.team-remove-btn button {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.9);
+    color: #e74c3c;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+}
+.team-remove-btn button:hover { background: #e74c3c; color: white; }
+
+.pokemon-card { position: relative; }
+
+/* Small screens tweaks */
+@media (max-width: 600px) {
+    .team-container .pokemon-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 10px;
+        padding: 8px 12px 16px;
+    }
+    .team-container .pokemon-card { padding: 10px; }
+    .team-container .pokemon-img { width: 64px; height: 64px; }
+    .team-title { font-size: 1.25rem; }
+}
+
+@media (min-width: 1200px) {
+    .team-container { max-width: 1100px; }
+}

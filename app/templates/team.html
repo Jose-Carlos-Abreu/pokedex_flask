@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Meu Time{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="team-container">
+        <div class="team-header">
+            <div>
+                <h2 class="team-title">Meu time pokemon</h2>
+                <p class="team-sub"><strong>{{ team_pokemons|length }}</strong> membros</p>
+            </div>
+            <div class="team-actions">
+                <a href="{{ url_for('home.home') }}" class="btn-link">Voltar à Pokédex</a>
+            </div>
+        </div>
+
+        {% if team_pokemons %}
+            <div class="pokemon-grid">
+                {% for poke in team_pokemons %}
+                    <div class="pokemon-card-container">
+                        <div class="pokemon-card">
+                            <form method="post" action="{{ url_for('usuarios.remove_from_team') }}" class="remove-form team-remove-btn">
+                                <input type="hidden" name="pokemon_id" value="{{ poke.id }}">
+                                <button type="submit" title="Remover">✕</button>
+                            </form>
+
+                            <div class="image-wrapper">
+                                <img src="{{ url_for('static', filename='images/pokemons/' ~ poke.id ~ '.png') }}" alt="{{ poke.nome }}" class="pokemon-img">
+                            </div>
+                            <span class="pokemon-number">#{{ "%03d" | format(poke.id|int) }}</span>
+                            <h2 class="pokemon-name">{{ poke.nome | capitalize }}</h2>
+
+                            <div class="types-row">
+                                {% if poke.tipo1 %}
+                                    <span class="type-badge {{ poke.tipo1 | lower }}">{{ poke.tipo1 }}</span>
+                                {% endif %}
+                                {% if poke.tipo2 %}
+                                    <span class="type-badge {{ poke.tipo2 | lower }}">{{ poke.tipo2 }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>Seu time está vazio.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
