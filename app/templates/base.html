@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Pokédex{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/team.css') }}">
 </head>
 <body>
@@ -11,7 +11,9 @@
 <header class="main-header">
     <nav class="navbar">
         <div class="logo">
-            <h1>🔴 Pokédex ⚪</h1>
+            <a href="/">
+                <h1>🔴 Pokédex ⚪</h1>
+            </a>
         </div>
         <div class="user-auth">
             {% if current_user.is_authenticated %}

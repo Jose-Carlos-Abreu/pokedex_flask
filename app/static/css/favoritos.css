@@ -1,0 +1,62 @@
+/* FAVORITE */
+
+.pokemon-card .remove-favorite-x {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #ccc;
+    transition: transform 0.2s ease, color 0.2s ease;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    margin: 0;
+    font-size: 1.6rem;
+    z-index: 7;
+}
+
+/* When inside a pokemon card, make favorite and control buttons inline and non-overlapping */
+
+.pokemon-card .btn-remove {
+    background: rgba(255,255,255,0.95);
+    border: 1px solid #eee;
+    padding: 6px 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.favorite-star:active, .remove-favorite-x:active {
+    transform: scale(0.95);
+}
+
+.remove-favorite-x:hover {
+    color: #e74c3c;
+    transform: scale(1.2);
+}
+
+/* HEADER FAVORITOS */
+
+.favorites-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 20px 5% 10px;
+}
+
+.btn-back {
+    display: inline-block;
+    padding: 8px 14px;
+    border-radius: 8px;
+    background: #ffffff;
+    border: 1px solid #ddd;
+    color: #333;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.btn-back:hover {
+    background: #f5f5f5;
+    transform: translateX(-2px);
+}

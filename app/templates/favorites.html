@@ -3,24 +3,33 @@
 {% block title %}Meus Favoritos{% endblock %}
 
 {% block content %}
-<a href="{{ url_for('home.home') }}" class="btn-voltar" style="display: flex; justify-content: center;">
-    ← Voltar para a Pokédex
-</a>
-<h1 class="page-title" style="text-align: center;">⭐ Meus Favoritos</h1>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/favoritos.css') }}">
+
+<div class="favorites-header">
+    <a href="{{ url_for('home.home') }}" class="btn-back">
+        ← Voltar para Pokédex
+    </a>
+
+    <h1 class="page-title">⭐ Meus Favoritos</h1>
+</div>
 
 {% if pokemons %}
 <div class="pokemon-grid">
     {% for poke in pokemons %}
         <div class="pokemon-card-container" id="card-{{ poke.id }}">
-            <a href="{{ url_for('home.pokemon_detail', pokemon_id=poke.id) }}"
-            class="pokemon-card">
+            <div class="pokemon-card">
 
                 <div class="image-wrapper">
                     <img src="{{ url_for('static', filename='images/pokemons/' ~ poke.id ~ '.png') }}"
                         alt="{{ poke.nome }}"
                         class="pokemon-img">
                 </div>
-
+                <button
+                    type="button"
+                    class="remove-favorite-x"
+                    data-pokemon-id="{{ poke.id }}"
+                    aria-label="Remover dos favoritos"
+                >✕</button>
                 <span class="pokemon-number">#{{ "%03d"|format(poke.id) }}</span>
                 <h2 class="pokemon-name">{{ poke.nome|capitalize }}</h2>
 
@@ -30,19 +39,12 @@
                         <span class="type-badge {{ poke.tipo2 | lower }}">{{ poke.tipo2 }}</span>
                     {% endif %}
                 </div>
-            </a>
-
-            <button
-                type="button"
-                class="remove-favorite-x"
-                data-pokemon-id="{{ poke.id }}"
-                aria-label="Remover dos favoritos"
-            >✕</button>
+            </div>
         </div>
     {% endfor %}
 </div>
 {% else %}
-<p class="empty-state" style="text-align: center;">Você ainda não favoritou nenhum Pokémon.</p>
+<p class="empty-state">Você ainda não favoritou nenhum Pokémon.</p>
 {% endif %}
 
 {% endblock %}
