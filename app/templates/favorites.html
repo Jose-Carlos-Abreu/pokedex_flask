@@ -5,16 +5,17 @@
 {% block content %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/favorites.css') }}">
 
-<div class="favorites-header">
-    <a href="{{ url_for('home.home') }}" class="btn-back">
-        ← Voltar para Pokédex
-    </a>
-
-    <h1 class="page-title">⭐ Meus Favoritos</h1>
-</div>
+{% if pokemons %}
+    <div class="favorites-header" id="favorites-header">
+        <a href="{{ url_for('home.home') }}" class="btn-back">
+            ← Voltar para Pokédex
+        </a>
+        <h1 class="page-title">⭐ Meus Favoritos</h1>
+    </div>
+{% endif %}
 
 {% if pokemons %}
-<div class="pokemon-grid">
+<div class="pokemon-grid" id="favorites-grid">
     {% for poke in pokemons %}
         <div class="pokemon-card-container" id="card-{{ poke.id }}">
             <div class="pokemon-card">
@@ -44,7 +45,18 @@
     {% endfor %}
 </div>
 {% else %}
-<p class="empty-state">Você ainda não favoritou nenhum Pokémon.</p>
+<div class="empty-state">
+    <div class="empty-icon">⭐</div>
+    <h2>Nenhum Pokémon favorito</h2>
+    <p>
+        Você ainda não favoritou nenhum Pokémon.<br>
+        Explore a Pokédex e marque seus favoritos!
+    </p>
+
+    <a href="{{ url_for('home.home') }}" class="btn-back">
+        ← Voltar para Pokédex
+    </a>
+</div>
 {% endif %}
 
 {% endblock %}

@@ -10,3 +10,4 @@ instance/
 .vscode/
 *.log
 app/data/favorites.csv
+app/data/teams.csv

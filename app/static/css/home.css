@@ -59,8 +59,9 @@
 /* Botão buscar */
 .btn-search {
     flex-shrink: 0;
-    width: 140px;
+    min-width: 140px;
     height: 52px;
+    padding: 0 16px;
     border-radius: 10px;
     background: linear-gradient(135deg, #ee1515, #cc1212);
     color: white;
@@ -68,11 +69,11 @@
     cursor: pointer;
     font-weight: bold;
     font-size: 1rem;
+
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 6px;
-    transition: transform 0.15s, box-shadow 0.15s, background 0.2s;
 }
 
 /* Hover do botão */
@@ -176,10 +177,117 @@
     border-radius: 8px;
     cursor: pointer;
     font-size: 0.9rem;
+    transform: rotate(180deg);
 }
 
 /* small buttons next to favorite star */
 .pokemon-card .btn-remove { color: #e74c3c; border-color: rgba(231,76,60,0.15); }
 .pokemon-card .btn-add-team { background: linear-gradient(135deg,#34c759,#28a745); color: white; border: none; }
 .pokemon-card .btn-add-team:hover { opacity: 0.95; }
-.pokemon-card .btn-add-team img { width: 20px; height: 20px; display: block; }
+.pokemon-card .btn-add-team img { width: 20px; height: 20px; display: block; }  
+
+/* FILTER WRAPPER */
+.filter-wrapper {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.filter-wrapper select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding-right: 36px;
+}
+
+/* Ícone invisível como padrão */
+.filter-icon {
+    display: none;
+}
+
+@media (max-width: 768px) {
+
+    .search-section {
+        padding: 24px 4%;
+    }
+
+    .search-form {
+        gap: 8px;
+    }
+
+    .search-form input,
+    .search-form select {
+        padding: 12px;
+        font-size: 0.95rem;
+    }
+
+    .btn-search {
+        min-width: 110px;
+        height: 44px;
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .search-section {
+        padding: 16px 4%;
+    }
+
+    .search-form {
+        gap: 6px;
+    }
+
+    .search-form input {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+    }
+
+    .search-form select {
+        padding: 10px;
+        font-size: 0.85rem;
+        max-width: 52px;
+    }
+
+    /* ESCONDE TEXTO */
+    .btn-search .btn-text {
+        display: none;
+    }
+
+    /* BOTÃO VIRA ÍCONE */
+    .btn-search {
+        min-width: 44px;
+        width: 44px;
+        height: 44px;
+        padding: 0;
+        border-radius: 10px;
+    }
+
+    .btn-search .btn-icon {
+        font-size: 1.1rem;
+    }
+
+    /* FILTER COMO ÍCONE */
+    .filter-wrapper {
+        width: 44px;
+        height: 44px;
+    }
+
+    .filter-wrapper select {
+        width: 44px;
+        height: 44px;
+        padding: 0;
+        border-radius: 10px;
+        text-indent: -9999px; /* esconde texto */
+        cursor: pointer;
+    }
+
+    .filter-icon {
+        display: flex;
+        position: absolute;
+        inset: 0;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+        font-size: 1.1rem;
+    }
+}

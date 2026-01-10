@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    /* ⭐ FAVORITAR NA HOME */
+    /* FAVORITAR NA HOME */
     const stars = document.querySelectorAll(".favorite-star");
 
     stars.forEach(star => {
@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    /* ❌ REMOVER NA PÁGINA DE FAVORITOS */
+    /* REMOVER NA PÁGINA DE FAVORITOS */
     const removeButtons = document.querySelectorAll(".remove-favorite-x");
 
     removeButtons.forEach(button => {
@@ -43,6 +43,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const pokemonId = button.dataset.pokemonId;
             const card = document.getElementById(`card-${pokemonId}`);
+            const grid = document.getElementById("favorites-grid");
+            const header = document.getElementById("favorites-header");
 
             try {
                 const response = await fetch(`/favorite/toggle/${pokemonId}`, {
@@ -56,6 +58,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 if (data.status === "removed" && card) {
                     card.remove();
+
+                    // SE NÃO SOBROU NENHUM CARD
+                    if (grid && grid.children.length === 0) {
+                    grid.remove();
+                    if (header) header.remove();
+
+                    const emptyState = document.createElement("div");
+                    emptyState.className = "empty-state";
+                    emptyState.innerHTML = `
+                        <div class="empty-icon">⭐</div>
+                        <h2>Nenhum Pokémon favorito</h2>
+                        <p>
+                            Você ainda não favoritou nenhum Pokémon.<br>
+                            Explore a Pokédex e marque seus favoritos!
+                        </p>
+                        <a href="/" class="btn-back">
+                            ← Voltar para Pokédex
+                        </a>
+                    `;
+
+                    document.querySelector("main").appendChild(emptyState);
+                }
                 } else {
                     console.warn("Card não encontrado:", pokemonId);
                 }

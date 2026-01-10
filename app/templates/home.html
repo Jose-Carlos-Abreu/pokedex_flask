@@ -21,20 +21,26 @@
             <div id="suggestions-container"></div>
         </div>
 
-        <select name="tipo">
-            <option value="">Todos os tipos</option>
-            {% for tipo in tipos %}
-                <option value="{{ tipo }}"
-                    {% if tipo == tipo_selecionado %}selected{% endif %}
-                >
-                    {{ tipo|capitalize }}
-                </option>
-            {% endfor %}
-        </select>
+        <div class="filter-wrapper">
+            <select name="tipo" aria-label="Filtrar por tipo">
+                <option value="">Todos os tipos</option>
+                {% for tipo in tipos %}
+                    <option value="{{ tipo }}"
+                        {% if tipo == tipo_selecionado %}selected{% endif %}
+                    >
+                        {{ tipo|capitalize }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <span class="filter-icon">⚙️</span>
+        </div>
 
         <button type="submit" class="btn-search">
-            🔍 Buscar
+            <span class="btn-text">Buscar</span>
+            <span class="btn-icon">🔍</span>
         </button>
+
 
     </form>
 </section>
